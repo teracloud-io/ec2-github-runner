@@ -14,6 +14,7 @@ class Config {
       ec2InstanceId: core.getInput('ec2-instance-id'),
       iamRoleName: core.getInput('iam-role-name'),
       runnerHomeDir: core.getInput('runner-home-dir'),
+      customLabels: core.getInput('custom-labels')
     };
 
     const tags = JSON.parse(core.getInput('aws-resource-tags'));
@@ -29,7 +30,6 @@ class Config {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
     };
-
     //
     // validate input
     //
@@ -58,6 +58,7 @@ class Config {
   generateUniqueLabel() {
     return Math.random().toString(36).substr(2, 5);
   }
+
 }
 
 try {
