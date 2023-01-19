@@ -65,6 +65,11 @@ inputs:
     description: >-
       Directory that contains actions-runner software and scripts. E.g. /home/runner/actions-runner.
     required: false
+  volume-size:
+    description: >-
+      Custom volume size for the Github Runner. Default is 8GB
+    required: false
+    default: 8
   custom-labels:
     description: >-
       Custom labels to add to the runner along with the unique label. Example '["custom-label1", "custom-label2"]'
