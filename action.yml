@@ -67,7 +67,7 @@ inputs:
     required: false
   volume-size:
     description: >-
-      Custom volume size for the Github Runner. Default is 8GB
+      Custom volume size for the Github Runner. Default is 8GB.
     required: false
     default: 8
   custom-labels:
