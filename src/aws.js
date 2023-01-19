@@ -36,7 +36,7 @@ async function startEc2Instance(label, githubRegistrationToken) {
   const params = {
     BlockDeviceMappings: [
       {
-        DeviceName: "/dev/sdh", 
+        DeviceName: "/dev/sda1", 
         Ebs: {
           VolumeSize: config.input.volumeSize
         }
