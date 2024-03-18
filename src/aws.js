@@ -11,7 +11,9 @@ function buildUserDataScript(githubRegistrationToken, label) {
       '#!/bin/bash',
       `cd "${config.input.runnerHomeDir}"`,
       'export RUNNER_ALLOW_RUNASROOT=1',
-      `./config.sh --url https://github.com/${config.githubContext.owner}/${config.githubContext.repo} --token ${githubRegistrationToken} --labels ${label + "," + config.input.customLabels}`,
+      `./config.sh --url https://github.com/${config.githubContext.owner}/${config.githubContext.repo} --token ${githubRegistrationToken} --labels ${
+        label + ',' + config.input.customLabels
+      } --name $(hostname)-$(uuidgen)`,
       './run.sh',
     ];
   } else {
@@ -19,10 +21,12 @@ function buildUserDataScript(githubRegistrationToken, label) {
       '#!/bin/bash',
       'mkdir actions-runner && cd actions-runner',
       'case $(uname -m) in aarch64) ARCH="arm64" ;; amd64|x86_64) ARCH="x64" ;; esac && export RUNNER_ARCH=${ARCH}',
-      'curl -O -L https://github.com/actions/runner/releases/download/v2.286.0/actions-runner-linux-${RUNNER_ARCH}-2.286.0.tar.gz',
-      'tar xzf ./actions-runner-linux-${RUNNER_ARCH}-2.286.0.tar.gz',
+      'curl -O -L https://github.com/actions/runner/releases/download/v2.313.0/actions-runner-linux-${RUNNER_ARCH}-2.313.0.tar.gz',
+      'tar xzf ./actions-runner-linux-${RUNNER_ARCH}-2.313.0.tar.gz',
       'export RUNNER_ALLOW_RUNASROOT=1',
-      `./config.sh --url https://github.com/${config.githubContext.owner}/${config.githubContext.repo} --token ${githubRegistrationToken} --labels ${label + "," + config.input.customLabels}`,
+      `./config.sh --url https://github.com/${config.githubContext.owner}/${config.githubContext.repo} --token ${githubRegistrationToken} --labels ${
+        label + ',' + config.input.customLabels
+      }`,
       './run.sh',
     ];
   }
@@ -36,11 +40,11 @@ async function startEc2Instance(label, githubRegistrationToken) {
   const params = {
     BlockDeviceMappings: [
       {
-        DeviceName: "/dev/sda1", 
+        DeviceName: '/dev/sda1',
         Ebs: {
-          VolumeSize: config.input.volumeSize
-        }
-      }
+          VolumeSize: config.input.volumeSize,
+        },
+      },
     ],
     ImageId: config.input.ec2ImageId,
     InstanceType: config.input.ec2InstanceType,
